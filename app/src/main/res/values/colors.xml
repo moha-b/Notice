@@ -17,6 +17,6 @@
     <color name="note_color_4">#673AB7</color>
     <color name="search_background">#333333</color>
     <color name="search_icon">#DBDBDB</color>
-    <color name="miscellaneous_background">#1F1F1F</color>
+    <color name="bottom_sheet_background">#1F1F1F</color>
     <color name="quick_actions_background">#2F2D2E</color>
 </resources>
