@@ -1,8 +1,10 @@
-package com.example.notice;
+package com.example.notice.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.notice.R;
 
 public class MainActivity extends AppCompatActivity {
 

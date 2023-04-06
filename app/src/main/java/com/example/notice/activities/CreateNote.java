@@ -1,4 +1,4 @@
-package com.example.notice;
+package com.example.notice.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
