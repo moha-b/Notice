@@ -5,4 +5,8 @@
     <string name="looking_for">Looking for ...</string>
     <string name="add">Add</string>
     <string name="fab">fab</string>
+    <string name="back_button">Back Button</string>
+    <string name="done">Done</string>
+    <string name="note_title">Note Title</string>
+    <string name="what_s_in_your_mind">What\'s in your mind ?</string>
 </resources>
