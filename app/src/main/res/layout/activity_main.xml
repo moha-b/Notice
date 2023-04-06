@@ -4,15 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".MainActivity">
 
+    <!-- Title -->
     <TextView
+        android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/notice"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <!-- Search Bar -->
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_tv"
+        android:orientation="horizontal"
+        android:background="@drawable/background_search"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:tint="@color/search_icon"
+            android:src="@drawable/ic_search"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:contentDescription="@string/search_icon"/>
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@null"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:hint="@string/looking_for"
+            android:textColorHint="@color/hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            android:autofillHints="no" />
+    </LinearLayout>
+    <!-- Recycler View -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/action_bar"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        />
+    <!-- Action Bar -->
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/quick_actions_background"
+        android:padding="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_add_circle"
+            app:tint="@color/icon"
+            android:contentDescription="@string/add" />
+
+        <ImageView
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_image"
+            android:layout_marginStart="@dimen/_16sdp"
+            app:tint="@color/icon"
+            android:contentDescription="@string/add" />
+
+        <ImageView
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_link"
+            android:layout_marginStart="@dimen/_16sdp"
+            app:tint="@color/icon"
+            android:contentDescription="@string/add" />
+    </LinearLayout>
+    <!-- Float Action Button -->
+    <ImageView
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/fab_background"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toTopOf="@+id/action_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/action_bar"
+        android:contentDescription="@string/fab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
