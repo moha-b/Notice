@@ -1,4 +1,4 @@
-package com.example.notice.createnote;
+package com.example.notice;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
