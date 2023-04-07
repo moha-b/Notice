@@ -31,7 +31,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new NoteViewHolder(LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.note_layout,parent,false));
+                inflate(R.layout.note_layout, parent, false));
     }
     /**
      * @param holder   The ViewHolder which should be updated to represent the contents of the
@@ -53,7 +53,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return position;
     }
 
-    class NoteViewHolder extends RecyclerView.ViewHolder{
+    static class NoteViewHolder extends RecyclerView.ViewHolder{
 
         TextView noteTitle, noteContent, timeAndDate;
         ImageView image;
@@ -62,7 +62,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             super(itemView);
             noteTitle = itemView.findViewById(R.id.note_title_tv);
             noteContent = itemView.findViewById(R.id.note_content_tv);
-            //timeAndDate = itemView.findViewById(R.id.time_and_date_tv);
+            timeAndDate = itemView.findViewById(R.id.time_and_date_tv);
             image = itemView.findViewById(R.id.image_view);
         }
 
@@ -74,6 +74,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 noteContent.setText(note.getContent());
             }
             // add the time
+            timeAndDate.setText(note.getDate());
         }
 
     }

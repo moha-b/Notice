@@ -57,9 +57,15 @@
     </LinearLayout>
     <!-- Recycler View -->
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
         android:layout_marginHorizontal="@dimen/_16sdp"
         app:layout_constraintBottom_toTopOf="@+id/action_bar"
         app:layout_constraintTop_toBottomOf="@+id/search_bar"
