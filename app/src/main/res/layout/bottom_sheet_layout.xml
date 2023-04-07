@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/bottom_sheet_layout"
     android:background="@drawable/bottom_sheet_background"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_peekHeight="@dimen/_35sdp"
@@ -11,7 +12,7 @@
     >
 
     <View
-        android:id="@+id/color_view"
+        android:id="@+id/note_color"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -19,6 +20,7 @@
         android:layout_gravity="center"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Colors -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +28,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_10sdp"
         android:baselineAligned="false">
 
         <FrameLayout
@@ -114,6 +116,32 @@
                 />
         </FrameLayout>
 
+    </LinearLayout>
+
+    <!-- Upload Image -->
+    <LinearLayout
+        android:id="@+id/upload_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:contentDescription="@string/uplaoded_image"
+            android:src="@drawable/ic_image"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/upload_image"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            />
     </LinearLayout>
 
 </LinearLayout>

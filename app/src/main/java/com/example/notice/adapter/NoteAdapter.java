@@ -1,5 +1,12 @@
 package com.example.notice.adapter;
 
+import static android.content.ContentValues.TAG;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notice.R;
 import com.example.notice.entities.Note;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.io.File;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder>{
@@ -56,13 +66,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     static class NoteViewHolder extends RecyclerView.ViewHolder{
 
         TextView noteTitle, noteContent, timeAndDate;
-        ImageView image;
+        RoundedImageView image;
+        ConstraintLayout noteLayout;
         // initialize
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             noteTitle = itemView.findViewById(R.id.note_title_tv);
             noteContent = itemView.findViewById(R.id.note_content_tv);
             timeAndDate = itemView.findViewById(R.id.time_and_date_tv);
+            noteLayout = itemView.findViewById(R.id.note_layout);
             image = itemView.findViewById(R.id.image_view);
         }
 
@@ -73,8 +85,31 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }else {
                 noteContent.setText(note.getContent());
             }
-            // add the time
             timeAndDate.setText(note.getDate());
+
+            GradientDrawable drawable = (GradientDrawable) noteLayout.getBackground();
+            if (note.getColor() != null && !note.getColor().isEmpty()){
+                drawable.setColor(Color.parseColor(note.getColor()));
+            }else {
+                drawable.setColor(Color.parseColor("#333333"));
+            }
+            // Load the image from file as a Bitmap
+            if (note.getImagePath() != null) {
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath());
+                    if (bitmap != null) {
+                        // Set the decoded bitmap to the ImageView or use it as needed
+                        image.setImageBitmap(bitmap);
+                    } else {
+                        Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
+                }
+            } else {
+                Log.e(TAG, "Image file not found: " + note.getImagePath());
+            }
         }
 
     }

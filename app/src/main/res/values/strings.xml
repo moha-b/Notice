@@ -10,4 +10,6 @@
     <string name="note_title">Note Title</string>
     <string name="what_s_in_your_mind">What\'s in your mind ?</string>
     <string name="color_button">Color Button</string>
+    <string name="uplaoded_image">Uplaoded Image</string>
+    <string name="upload_image">Upload Image</string>
 </resources>
