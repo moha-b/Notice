@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getNotes(){
 
+        // Get all notes saved in database
         @SuppressLint("StaticFieldLeak")
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>>{
             @Override
