@@ -29,17 +29,6 @@ public class Note implements Serializable {
     @ColumnInfo(name = "color")
     private String color;
 
-    // Constructors, getters, and setters
-
-    public Note(String title, String content, String date, String imagePath, String link, String color) {
-        this.title = title;
-        this.content = content;
-        this.date = date;
-        this.imagePath = imagePath;
-        this.link = link;
-        this.color = color;
-    }
-
     // Getters and Setters for the fields
 
     public int getId() {

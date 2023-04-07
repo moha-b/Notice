@@ -102,6 +102,7 @@
     </LinearLayout>
     <!-- Float Action Button -->
     <ImageView
+        android:id="@+id/add_note"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_20sdp"
