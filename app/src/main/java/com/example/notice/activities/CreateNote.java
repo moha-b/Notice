@@ -1,5 +1,7 @@
 package com.example.notice.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -40,6 +42,7 @@ public class CreateNote extends AppCompatActivity {
 
     static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     static final int REQUEST_CODE_SELECT_IMAGE = 2;
+    ActivityResultLauncher<Intent> galleryLauncher;
     EditText noteTitle, noteContent;
     ImageView backButton, doneButton;
     RoundedImageView uploadedImage;
@@ -72,6 +75,23 @@ public class CreateNote extends AppCompatActivity {
             }
         });
         initializeBottomSheet();
+        // Define a new ActivityResultLauncher to handle the gallery image selection
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        // Get the selected image URI from the intent
+                        Uri imageUri = result.getData().getData();
+                        try {
+                            // Load the image from URI as a Bitmap
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                            uploadedImage.setImageBitmap(bitmap);
+                            imagePath = getImagePathFromUri(imageUri);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
     private void initializeVariables() {
         color = "";
@@ -118,7 +138,6 @@ public class CreateNote extends AppCompatActivity {
         }
         new SaveNoteTask().execute();
     }
-
     private void initializeBottomSheet(){
         final LinearLayout bottomSheet = findViewById(R.id.bottom_sheet_layout);
         View noteColor = bottomSheet.findViewById(R.id.note_color);
@@ -205,63 +224,34 @@ public class CreateNote extends AppCompatActivity {
             }
         });
     }
-
-
     private void selectImageFromGallery() {
+        // Check if the app has permission to read external storage
         if (ContextCompat.checkSelfPermission(
                 getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+            // If permission is not granted, request it
             ActivityCompat.requestPermissions(
-                    CreateNote.this,
+                    this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_CODE_STORAGE_PERMISSION
             );
         } else {
+            // If permission is granted, use the galleryLauncher to start the image picking intent
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+            galleryLauncher.launch(intent);
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                selectImageFromGallery();
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // If permission is granted, use the galleryLauncher to start the image picking intent
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                galleryLauncher.launch(intent);
             } else {
+                // If permission is denied, show a message or take appropriate action
                 Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // Handle image picker result
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
-            // Get the picked image URI
-            Uri imageUri = data.getData();
-            if (imageUri != null) {
-                try {
-                    // Load the image from URI as a Bitmap
-                    InputStream stream = getContentResolver().openInputStream(imageUri);
-                    if (stream != null) {
-                        Bitmap bitmap = BitmapFactory.decodeStream(stream);
-                        // Now you have the image as a Bitmap, you can use it as needed
-                        System.out.println("we are here");
-                        // For example, you can display it in an ImageView, save it to local storage, etc.
-                        uploadedImage.setImageBitmap(bitmap);
-                        imagePath = getImagePathFromUri(imageUri);
-                    } else {
-                        // Failed to open InputStream from URI, handle accordingly
-                        Toast.makeText(this, "Failed to open InputStream from URI", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                // Image URI is null, handle accordingly
-                Toast.makeText(this, "Image URI is null", Toast.LENGTH_SHORT).show();
             }
         }
     }
