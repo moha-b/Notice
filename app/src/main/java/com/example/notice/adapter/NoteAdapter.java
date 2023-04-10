@@ -102,13 +102,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                         image.setImageBitmap(bitmap);
                     } else {
                         Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
+                        System.out.println("NoteAdapter.java :: Try retrieve the image from database at line 98");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
+                    System.out.println("NoteAdapter.java :: Catch retrieve the image from database at line 98");
                 }
             } else {
                 Log.e(TAG, "Image file not found: " + note.getImagePath());
+                System.out.println("NoteAdapter.java :: Image not Found at line 97");
             }
         }
 

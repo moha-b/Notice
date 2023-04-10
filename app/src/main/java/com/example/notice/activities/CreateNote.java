@@ -89,6 +89,7 @@ public class CreateNote extends AppCompatActivity {
                             imagePath = getImagePathFromUri(imageUri);
                         } catch (Exception e) {
                             e.printStackTrace();
+                            System.out.println("CreateNote.java :: galleryLauncher at line 79");
                         }
                     }
                 });
