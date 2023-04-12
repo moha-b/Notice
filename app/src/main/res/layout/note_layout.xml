@@ -9,19 +9,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/note_background"
     >
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        app:riv_corner_radius_top_left="@dimen/_10sdp"
-        app:riv_corner_radius_top_right="@dimen/_10sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
     <TextView
         android:id="@+id/note_title_tv"
         android:layout_width="match_parent"
@@ -32,7 +19,7 @@
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@id/image_view"
+       app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
 

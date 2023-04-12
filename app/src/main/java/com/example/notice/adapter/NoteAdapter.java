@@ -66,7 +66,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     static class NoteViewHolder extends RecyclerView.ViewHolder{
 
         TextView noteTitle, noteContent, timeAndDate;
-        RoundedImageView image;
         ConstraintLayout noteLayout;
         // initialize
         public NoteViewHolder(@NonNull View itemView) {
@@ -75,7 +74,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             noteContent = itemView.findViewById(R.id.note_content_tv);
             timeAndDate = itemView.findViewById(R.id.time_and_date_tv);
             noteLayout = itemView.findViewById(R.id.note_layout);
-            image = itemView.findViewById(R.id.image_view);
         }
 
         void setNote(Note note){
@@ -92,26 +90,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 drawable.setColor(Color.parseColor(note.getColor()));
             }else {
                 drawable.setColor(Color.parseColor("#333333"));
-            }
-            // Load the image from file as a Bitmap
-            if (note.getImagePath() != null) {
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath());
-                    if (bitmap != null) {
-                        // Set the decoded bitmap to the ImageView or use it as needed
-                        image.setImageBitmap(bitmap);
-                    } else {
-                        Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
-                        System.out.println("NoteAdapter.java :: Try retrieve the image from database at line 98");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
-                    System.out.println("NoteAdapter.java :: Catch retrieve the image from database at line 98");
-                }
-            } else {
-                Log.e(TAG, "Image file not found: " + note.getImagePath());
-                System.out.println("NoteAdapter.java :: Image not Found at line 97");
             }
         }
 

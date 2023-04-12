@@ -39,16 +39,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreateNote extends AppCompatActivity {
-
-    static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
-    static final int REQUEST_CODE_SELECT_IMAGE = 2;
-    ActivityResultLauncher<Intent> galleryLauncher;
     EditText noteTitle, noteContent;
     ImageView backButton, doneButton;
-    RoundedImageView uploadedImage;
     TextView timeAndDate;
     String color ;
-    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,34 +69,14 @@ public class CreateNote extends AppCompatActivity {
             }
         });
         initializeBottomSheet();
-        // Define a new ActivityResultLauncher to handle the gallery image selection
-        galleryLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        // Get the selected image URI from the intent
-                        Uri imageUri = result.getData().getData();
-                        try {
-                            // Load the image from URI as a Bitmap
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                            uploadedImage.setImageBitmap(bitmap);
-                            imagePath = getImagePathFromUri(imageUri);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("CreateNote.java :: galleryLauncher at line 79");
-                        }
-                    }
-                });
     }
     private void initializeVariables() {
         color = "";
-        imagePath ="";
         backButton = findViewById(R.id.back_button);
         doneButton = findViewById(R.id.done_button);
         noteTitle = findViewById(R.id.note_title);
         noteContent = findViewById(R.id.note_content);
         timeAndDate = findViewById(R.id.time_and_date);
-        uploadedImage = findViewById(R.id.image_view);
     }
 
     private void saveNote(){
@@ -119,7 +93,6 @@ public class CreateNote extends AppCompatActivity {
         note.setContent(noteContent.getText().toString());
         note.setDate(timeAndDate.getText().toString());
         note.setColor(color);
-        note.setImagePath(imagePath);
         // this class to save data because the Room database doesn't allow
         // to do this operations on the main thread
         @SuppressLint("StaticFieldLeak")
@@ -216,59 +189,5 @@ public class CreateNote extends AppCompatActivity {
                 drawable.setColor(Color.parseColor(color));
             }
         });
-
-        bottomSheet.findViewById(R.id.upload_image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImageFromGallery();
-                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
     }
-    private void selectImageFromGallery() {
-        // Check if the app has permission to read external storage
-        if (ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            // If permission is not granted, request it
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_CODE_STORAGE_PERMISSION
-            );
-        } else {
-            // If permission is granted, use the galleryLauncher to start the image picking intent
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            galleryLauncher.launch(intent);
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // If permission is granted, use the galleryLauncher to start the image picking intent
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                galleryLauncher.launch(intent);
-            } else {
-                // If permission is denied, show a message or take appropriate action
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private String getImagePathFromUri(Uri uri) {
-        String filePath;
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        if (cursor == null) {
-            filePath = uri.getPath();
-        }else{
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndexOrThrow("_data");
-            filePath = cursor.getString(columnIndex);
-            cursor.close();
-        }
-        return filePath;
-    }
-
 }

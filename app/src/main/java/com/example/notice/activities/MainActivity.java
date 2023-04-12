@@ -26,7 +26,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_ADD_NOTE = 1;
     private static final String TAG = "MainActivity";
     // Declare an ActivityResultLauncher object
     private ActivityResultLauncher<Intent> launcher;
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 noteList.addAll(notes);
                 adapter.notifyDataSetChanged();
                 notesRecyclerView.smoothScrollToPosition(0);
-                notesRecyclerView.smoothScrollToPosition(0);
+                //notesRecyclerView.smoothScrollToPosition(0);
             }
         }
         new GetNotesTask().execute();
