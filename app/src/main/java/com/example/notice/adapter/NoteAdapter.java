@@ -2,16 +2,18 @@ package com.example.notice.adapter;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,14 +24,21 @@ import com.example.notice.entities.Note;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder>{
 
     private List<Note> notes;
+    private List<Note> source;
+    private Timer timer;
 
     public NoteAdapter(List<Note> notes) {
         this.notes = notes;
+        this.source = notes;
+
     }
     /**
      * @param parent   The ViewGroup into which the new View will be added after it is bound to
@@ -115,5 +124,38 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }
         }
 
+    }
+
+    public void search(String text){
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(text.trim().isEmpty()){
+                    notes = source;
+                }else{
+                    ArrayList<Note> list = new ArrayList<>();
+                    for (Note item: source){
+                        if (item.getTitle().toLowerCase().contains(text.toLowerCase())){
+                            list.add(item);
+                        }
+                    }
+                    notes = list;
+                }
+                new Handler(Looper.getMainLooper()) {
+                }.post(new Runnable(){
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        },300);
+    }
+    public  void canselTimer(){
+        if (timer != null){
+            timer.cancel();
+        }
     }
 }

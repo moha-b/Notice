@@ -12,8 +12,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.notice.R;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher;
     ImageView addNote;
     RecyclerView notesRecyclerView;
+    EditText search;
     List<Note> noteList;
     NoteAdapter adapter;
     @Override
@@ -39,6 +43,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addNote = findViewById(R.id.add_note);
+        search = findViewById(R.id.search);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.canselTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(noteList.size() != 0){
+                    adapter.search(editable.toString());
+                }
+            }
+        });
         addNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
