@@ -29,7 +29,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_ADD_NOTE = 1;
     private static final String TAG = "MainActivity";
     // Declare an ActivityResultLauncher object
     private ActivityResultLauncher<Intent> launcher;
@@ -42,41 +41,48 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // initial
         addNote = findViewById(R.id.add_note);
         search = findViewById(R.id.search);
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        // TODO 1: initialize the RecyclerView
+        notesRecyclerView = findViewById(R.id.recycler_view);
+        // TODO 2: give the RecyclerView a shape
+        notesRecyclerView.setLayoutManager(
+                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        );
+        // TODO 4: initialize the list for adapter
+        noteList = new ArrayList<>();
+        // TODO 3: initialize the Adapter
+        adapter = new NoteAdapter(noteList);
+        // TODO 5: a sign Adapter for the recycler view
+        notesRecyclerView.setAdapter(adapter);
+       search.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+           }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.canselTimer();
-            }
+           @Override
+           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(noteList.size() != 0){
-                    adapter.search(editable.toString());
-                }
-            }
-        });
+           }
+
+           @Override
+           public void afterTextChanged(Editable editable) {
+               // Check if the list is empty of not
+               if(noteList.size() != 0){
+                   adapter.search(editable.toString());
+               }
+           }
+       });
         addNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start the activity using the launcher
                 launcher.launch(new Intent(getApplicationContext(), CreateNote.class));
             }
         });
         // initialize recycler view with the required properties
-        notesRecyclerView = findViewById(R.id.recycler_view);
-        notesRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        );
-        noteList = new ArrayList<>();
-        adapter = new NoteAdapter(noteList);
-        notesRecyclerView.setAdapter(adapter);
+
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     // Handle the result in the callback function

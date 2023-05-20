@@ -41,7 +41,6 @@ import java.util.Locale;
 public class CreateNote extends AppCompatActivity {
 
     static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
-    static final int REQUEST_CODE_SELECT_IMAGE = 2;
     ActivityResultLauncher<Intent> galleryLauncher;
     EditText noteTitle, noteContent;
     ImageView backButton, doneButton;
@@ -106,6 +105,8 @@ public class CreateNote extends AppCompatActivity {
     }
 
     private void saveNote(){
+        // TODO 1: check if the note title not empty
+        // TODO 2: save the user inputs in the database
         if (noteTitle.getText().toString().trim().isEmpty()){
             Toast.makeText(this, "Note title can't be empty", Toast.LENGTH_SHORT).show();
             return;

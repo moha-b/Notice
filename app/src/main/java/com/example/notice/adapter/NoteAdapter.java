@@ -38,7 +38,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public NoteAdapter(List<Note> notes) {
         this.notes = notes;
         this.source = notes;
-
     }
     /**
      * @param parent   The ViewGroup into which the new View will be added after it is bound to
