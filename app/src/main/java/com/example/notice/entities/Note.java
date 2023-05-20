@@ -20,12 +20,6 @@ public class Note implements Serializable {
     @ColumnInfo(name = "date")
     private String date;
 
-    @ColumnInfo(name = "image_path")
-    private String imagePath;
-
-    @ColumnInfo(name = "link")
-    private String link;
-
     @ColumnInfo(name = "color")
     private String color;
 
@@ -61,22 +55,6 @@ public class Note implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getColor() {

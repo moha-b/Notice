@@ -101,28 +101,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }else {
                 drawable.setColor(Color.parseColor("#333333"));
             }
-            // Load the image from file as a Bitmap
-            if (note.getImagePath() != null) {
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath());
-                    if (bitmap != null) {
-                        // Set the decoded bitmap to the ImageView or use it as needed
-                        image.setImageBitmap(bitmap);
-                    } else {
-                        Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
-                        System.out.println("NoteAdapter.java :: Try retrieve the image from database at line 98");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Failed to decode image file: " + note.getImagePath());
-                    System.out.println("NoteAdapter.java :: Catch retrieve the image from database at line 98");
-                }
-            } else {
-                Log.e(TAG, "Image file not found: " + note.getImagePath());
-                System.out.println("NoteAdapter.java :: Image not Found at line 97");
-            }
         }
-
     }
 
     public void search(String text){
