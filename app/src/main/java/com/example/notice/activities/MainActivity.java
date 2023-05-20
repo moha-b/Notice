@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.notice.R;
 import com.example.notice.adapter.NoteAdapter;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     // Declare an ActivityResultLauncher object
     private ActivityResultLauncher<Intent> launcher;
+    MediaPlayer player;
     ImageView addNote;
     RecyclerView notesRecyclerView;
     EditText search;
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // initialize recycler view with the required properties
-
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     // Handle the result in the callback function
@@ -120,5 +122,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         new GetNotesTask().execute();
+    }
+    public void play() {
+        if (player == null) {
+            player = MediaPlayer.create(this, R.raw.mii_theme);
+        }
+
+        player.start();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        play();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stop();
+    }
+    public void stop() {
+        if (player != null) {
+            player.release();
+            player = null;
+            Toast.makeText(this, "MediaPlayer released", Toast.LENGTH_SHORT).show();
+        }
     }
 }
