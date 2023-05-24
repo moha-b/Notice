@@ -1,25 +1,13 @@
 package com.example.notice.activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,9 +19,7 @@ import com.example.notice.R;
 import com.example.notice.database.NoteDatabase;
 import com.example.notice.entities.Note;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -44,12 +30,18 @@ public class CreateNote extends AppCompatActivity {
     TextView timeAndDate;
     String color;
 
+    Note alreadyNote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
         initializeVariables();
+        if (getIntent().getBooleanExtra("isView",false)){
+            alreadyNote = (Note) getIntent().getSerializableExtra("note");
+            viewOrUpdateNote();
+        }
         // back to previous page
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +63,12 @@ public class CreateNote extends AppCompatActivity {
         initializeBottomSheet();
 
     }
+
+    private void viewOrUpdateNote() {
+        noteTitle.setText(alreadyNote.getTitle());
+        noteContent.setText(alreadyNote.getContent());
+    }
+
     private void initializeVariables() {
         color = "";
         backButton = findViewById(R.id.back_button);
@@ -96,6 +94,11 @@ public class CreateNote extends AppCompatActivity {
         note.setContent(noteContent.getText().toString());
         note.setDate(timeAndDate.getText().toString());
         note.setColor(color);
+
+        if(alreadyNote != null){
+            note.setId(alreadyNote.getId());
+        }
+
         // this class to save data because the Room database doesn't allow
         // to do this operations on the main thread
         @SuppressLint("StaticFieldLeak")
@@ -118,7 +121,7 @@ public class CreateNote extends AppCompatActivity {
     private void initializeBottomSheet(){
         final LinearLayout bottomSheet = findViewById(R.id.bottom_sheet_layout);
         View noteColor = bottomSheet.findViewById(R.id.note_color);
-        BottomSheetBehavior<LinearLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+        //BottomSheetBehavior<LinearLayout> behavior = BottomSheetBehavior.from(bottomSheet);
         GradientDrawable drawable = (GradientDrawable) noteColor.getBackground();
         final ImageView imageColor1 = bottomSheet.findViewById(R.id.im_color_1);
         final ImageView imageColor2 = bottomSheet.findViewById(R.id.im_color_2);
@@ -192,5 +195,25 @@ public class CreateNote extends AppCompatActivity {
                 drawable.setColor(Color.parseColor(color));
             }
         });
+
+        if(alreadyNote != null && alreadyNote.getColor() != null){
+            switch (alreadyNote.getColor()){
+                case "#333333":
+                    imageColor1.performClick();
+                    break;
+                case "#FDBE3B":
+                    imageColor2.performClick();
+                    break;
+                case "#FF4842":
+                    imageColor3.performClick();
+                    break;
+                case "#3A52FC":
+                    imageColor4.performClick();
+                    break;
+                case "#673AB7":
+                    imageColor5.performClick();
+                    break;
+            }
+        }
     }
 }

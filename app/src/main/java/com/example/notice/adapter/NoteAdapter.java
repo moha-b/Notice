@@ -33,11 +33,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     private List<Note> notes;
     private List<Note> source;
+    private NoteListener noteListener;
     private Timer timer;
 
-    public NoteAdapter(List<Note> notes) {
+    public NoteAdapter(List<Note> notes,NoteListener noteListener) {
         this.notes = notes;
         this.source = notes;
+        this.noteListener = noteListener;
     }
     /**
      * @param parent   The ViewGroup into which the new View will be added after it is bound to
@@ -59,6 +61,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         holder.setNote(notes.get(position));
+        holder.noteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noteListener.onNoteClicked(notes.get(position),position);
+            }
+        });
     }
 
     @Override
