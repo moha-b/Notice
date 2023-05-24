@@ -29,7 +29,6 @@ public class CreateNote extends AppCompatActivity {
     ImageView backButton, doneButton;
     TextView timeAndDate;
     String color;
-
     Note alreadyNote;
 
     @Override

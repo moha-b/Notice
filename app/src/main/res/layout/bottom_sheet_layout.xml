@@ -118,30 +118,4 @@
 
     </LinearLayout>
 
-    <!-- Upload Image -->
-    <LinearLayout
-        android:id="@+id/upload_image"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:contentDescription="@string/uplaoded_image"
-            android:src="@drawable/ic_image"
-            app:tint="@color/white" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:text="@string/upload_image"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            />
-    </LinearLayout>
-
 </LinearLayout>

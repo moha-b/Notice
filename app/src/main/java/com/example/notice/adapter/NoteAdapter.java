@@ -59,7 +59,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setNote(notes.get(position));
         holder.noteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     static class NoteViewHolder extends RecyclerView.ViewHolder{
 
         TextView noteTitle, noteContent, timeAndDate;
-        RoundedImageView image;
         ConstraintLayout noteLayout;
         // initialize
         public NoteViewHolder(@NonNull View itemView) {
@@ -91,7 +90,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             noteContent = itemView.findViewById(R.id.note_content_tv);
             timeAndDate = itemView.findViewById(R.id.time_and_date_tv);
             noteLayout = itemView.findViewById(R.id.note_layout);
-            image = itemView.findViewById(R.id.image_view);
         }
 
         void setNote(Note note){

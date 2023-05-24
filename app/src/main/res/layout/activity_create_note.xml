@@ -93,18 +93,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/time_and_date"
                 android:autofillHints="no" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/image_view"
-                app:riv_corner_radius="@dimen/_16sdp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintTop_toBottomOf="@id/note_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/uplaoded_image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
