@@ -5,6 +5,20 @@ Using Room Database, the app provides a scalable data storage solution that can 
 
 Overall, a simple note-taking app using Java and Room Database is an ideal tool for anyone who wants to stay organized and productive, whether you're a student, professional, or anyone in between.
 
+- [Notice](#notice)
+  * [Ui Section](#ui-section)
+    + [Activity Main](#activity-main)
+    + [Activity Create Note](#activity-create-note)
+    + [Note layout](#note-layout)
+    + [Bottom Sheet](#bottom-sheet)
+  * [Database Section](#database-section)
+  * [Main Activity Section](#main-activity-section)
+  * [Create Activity Section](#create-activity-section)
+  * [Adapter Section](#adapter-section)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## Ui Section
 First of all we use the `constraint layout` alot
 <img align="right" src="https://github.com/moha-b/Notice/assets/73842931/cf247085-c406-4c27-bcd5-9c4a279f2d40"/>
@@ -78,11 +92,11 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
             android:autofillHints="no" />
     </LinearLayout>
 ```
-### How we can do this ?
+How we can do this ?
 ```xml
    android:background="@drawable/background_search" // here we give the LinearLayout a background how?
 ```
-### [Click Here](https://www.youtube.com/watch?v=MeCjfgR86MU)
+[Click Here](https://www.youtube.com/watch?v=MeCjfgR86MU)
 
 ---
 
