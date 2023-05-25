@@ -37,6 +37,7 @@ public class CreateNote extends AppCompatActivity {
         setContentView(R.layout.activity_create_note);
 
         initializeVariables();
+        // Check if the activity is opened for viewing or updating an existing note
         if (getIntent().getBooleanExtra("isView",false)){
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
             viewOrUpdateNote();
@@ -62,7 +63,7 @@ public class CreateNote extends AppCompatActivity {
         initializeBottomSheet();
 
     }
-
+    // Method to view or update an existing note
     private void viewOrUpdateNote() {
         noteTitle.setText(alreadyNote.getTitle());
         noteContent.setText(alreadyNote.getContent());
@@ -77,44 +78,51 @@ public class CreateNote extends AppCompatActivity {
         timeAndDate = findViewById(R.id.time_and_date);
     }
 
-    private void saveNote(){
-        // TODO 1: check if the note title not empty
-        // TODO 2: save the user inputs in the database
-        if (noteTitle.getText().toString().trim().isEmpty()){
+    // Method to save the note
+    private void saveNote() {
+        // TODO 1: Check if the note title is not empty
+        if (noteTitle.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Note title can't be empty", Toast.LENGTH_SHORT).show();
             return;
-        } else if (noteTitle.getText().toString().trim().isEmpty() &&
+        }
+        // TODO 2: Check if the note content is not empty
+        else if (noteTitle.getText().toString().trim().isEmpty() &&
                 noteContent.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Note can't be empty", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // TODO 3: Create a new Note object and set its properties
         final Note note = new Note();
         note.setTitle(noteTitle.getText().toString());
         note.setContent(noteContent.getText().toString());
         note.setDate(timeAndDate.getText().toString());
         note.setColor(color);
 
-        if(alreadyNote != null){
+        // TODO 4: If it's an update operation, set the note ID
+        if (alreadyNote != null) {
             note.setId(alreadyNote.getId());
         }
 
-        // this class to save data because the Room database doesn't allow
-        // to do this operations on the main thread
-        @SuppressLint("StaticFieldLeak")
-        class SaveNoteTask extends AsyncTask<Void, Void, Void>{
+        // TODO 5: Save the note in the database using an AsyncTask
+        class SaveNoteTask extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... voids) {
+                // here we insert the note object to database
                 NoteDatabase.getInstance(getApplicationContext()).dao().insert(note);
                 return null;
             }
+
             @Override
             protected void onPostExecute(Void unused) {
                 super.onPostExecute(unused);
+                // TODO 6: Set the result as RESULT_OK and finish the activity
                 Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         }
+        // TODO 7: Execute the AsyncTask to save the note
         new SaveNoteTask().execute();
     }
     private void initializeBottomSheet(){
@@ -194,7 +202,7 @@ public class CreateNote extends AppCompatActivity {
                 drawable.setColor(Color.parseColor(color));
             }
         });
-
+        // If an existing note is being viewed or updated, set the selected color
         if(alreadyNote != null && alreadyNote.getColor() != null){
             switch (alreadyNote.getColor()){
                 case "#333333":

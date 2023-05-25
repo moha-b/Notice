@@ -104,10 +104,16 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
 
     private void getNotes() {
         // Get all notes saved in database
+
+        // Create a new instance of the GetNotesTask class
+        // This class extends AsyncTask to perform the database operation in the background
         @SuppressLint("StaticFieldLeak")
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
+
             @Override
             protected List<Note> doInBackground(Void... voids) {
+                // Perform the database operation to get all notes
+                // Use the NoteDatabase instance to access the database and the DAO to retrieve the notes
                 return NoteDatabase.getInstance(getApplicationContext())
                         .dao().getAllNotes();
             }
@@ -116,13 +122,25 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
-                noteList.clear(); // Clear noteList before adding retrieved notes
+                // This method is executed on the main user interface thread after the database operation is complete
+
+                // Clear the noteList before adding the retrieved notes
+                noteList.clear();
+
+                // Add the retrieved notes to the noteList
                 noteList.addAll(notes);
+
+                // Notify the adapter that the data set has changed
+                // This will update the RecyclerView with the new notes
                 adapter.notifyDataSetChanged();
+
+                // Scroll the RecyclerView to the top position
                 notesRecyclerView.smoothScrollToPosition(0);
                 notesRecyclerView.smoothScrollToPosition(0);
             }
         }
+
+        // Create an instance of GetNotesTask and execute it
         new GetNotesTask().execute();
     }
 
