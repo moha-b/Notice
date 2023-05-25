@@ -255,7 +255,7 @@ here we have just 2 views and these 2 inside a vertical LinearLayout
 
 ## Database Section
 
-We use [Room Database](https://developer.android.com/training/data-storage/room) to create our database we have for main steps.
+We use [Room Database](https://developer.android.com/training/data-storage/room) to create our database we have 4 main steps below or u can watch a [tutorial](https://www.youtube.com/watch?v=y30EfQQiOSM&list=PLXjbGq0ERjFq5Y3vEK1v0ic5oEAqmpHa7&index=3).
 
 1 - Import Room dependencies
 
@@ -351,6 +351,35 @@ public interface NoteDao {
 `@Insert(onConflict = OnConflictStrategy.REPLACE)` : This annotation is used to define an insert operation, it should be replaced with the new one.
 
 4 - Create the Database
+
+this setup is mandatory to create a `room database` 
+```java
+@Database(entities = {Note.class}, version = 1, exportSchema = false)
+public abstract class NoteDatabase extends RoomDatabase {
+
+    // Declare an abstract method to retrieve the DAO (Data Access Object)
+    public abstract NoteDao dao();
+
+    // Singleton pattern to ensure only one instance of the database is created
+
+    // Declare a volatile instance variable to ensure visibility across threads
+    private static volatile NoteDatabase instance;
+
+    // Create a synchronized method to get the instance of the database
+    public static synchronized NoteDatabase getInstance(Context context) {
+        // Check if the instance is null
+        if (instance == null) {
+            // If the instance is null, create a new instance using Room's databaseBuilder method
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                            NoteDatabase.class, "note_database")
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        // Return the instance of the database
+        return instance;
+    }
+}
+```
 
 ## Main Activity Section
 
