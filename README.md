@@ -18,7 +18,7 @@ we have 2 main screens and the note layout and the bottom sheet layout so in tot
 
 ### Activity Main
 ```
-the path : app/src/main/res/layout/activity_main.xml
+Path : app/src/main/res/layout/activity_main.xml
 ```
 ![1and2-preview](https://github.com/moha-b/Notice/assets/73842931/b7705d14-dd86-4510-a364-284beca8f4f1)
 
@@ -51,7 +51,7 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_tv"
         android:orientation="horizontal"        // here we tell the LinearLayout it will arrange the views horizontally
-        android:background="@drawable/background_search" // here we give the LinearLayout a background how? later..
+        android:background="@drawable/background_search" // here we give the LinearLayout a background how? 
         android:paddingHorizontal="@dimen/_10sdp"
         android:gravity="center" // to arrange the views in the center
         >
@@ -78,6 +78,11 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
             android:autofillHints="no" />
     </LinearLayout>
 ```
+### How we can do this ?
+```xml
+   android:background="@drawable/background_search" // here we give the LinearLayout a background how?
+```
+### [Click Here](https://www.youtube.com/watch?v=MeCjfgR86MU)
 
 ---
 
@@ -120,7 +125,7 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
 
 ### Activity Create Note
 ```
-the path : app/src/main/res/layout/activity_create_note.xml
+Path : app/src/main/res/layout/activity_create_note.xml
 ```
 ![1_2_3_4and5-preview](https://github.com/moha-b/Notice/assets/73842931/066f86ce-118b-4014-a104-073fbf4e0d93)
 
@@ -187,7 +192,65 @@ for makeing the xml file look readable
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 ```
+---
 
+### Note layout
+```
+Path : app/src/main/res/layout/note_layout.xml
+```
+consist of 3 views one for the title and the content and the time
+
+---
+
+### Bottom Sheet
+```
+Path : app/src/main/res/layout/bottom_sheet_layout.xml
+```
+![Untitled-preview](https://github.com/moha-b/Notice/assets/73842931/4a16e14d-6269-4ee7-a860-09bd816eb149)
+here we have just 2 views and these 2 inside a vertical LinearLayout
+
+1 - regular view
+```xml
+ <View
+        android:id="@+id/note_color"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/bottom_sheet_shape" // this line what gives it the shape
+        android:layout_gravity="center" // to center the view 
+        app:layout_constraintTop_toTopOf="parent" />
+```
+2 - horizontally LinearLayout : it's containe the 5 colors 
+```xml
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:baselineAligned="false">
+         <!-- FrameLayout : we use it just to make the xml file readable -->
+        <FrameLayout
+            android:layout_width="0dp" // take the size u need
+            android:layout_height="wrap_content"
+            android:layout_weight="1"  // till here it will contain 1 view
+            >
+            <ImageView
+                android:id="@+id/im_color_1"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/background_note_color_1" // here is color circle
+                app:layout_constraintEnd_toStartOf="@+id/im_color_2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/color_button"
+                android:src="@drawable/ic_done" // done icon
+                android:padding="@dimen/_9sdp"
+                app:tint="@color/white" // color for done icon
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+        </FrameLayout>
+```
 
 ## Database Section
 
