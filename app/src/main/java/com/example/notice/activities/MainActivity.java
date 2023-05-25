@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
     private ActivityResultLauncher<Intent> launcher;
     MediaPlayer player;
     ImageView addNote;
-    RecyclerView notesRecyclerView;
     EditText search;
+    RecyclerView notesRecyclerView;
     List<Note> noteList;
     NoteAdapter adapter;
 
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         notesRecyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         );
-        // TODO 4: initialize the list for adapter
+        // TODO 3: initialize the list for adapter
         noteList = new ArrayList<>();
-        // TODO 3: initialize the Adapter
+        // TODO 4: initialize the Adapter
         adapter = new NoteAdapter(noteList, this);
         // TODO 5: a sign Adapter for the recycler view
         notesRecyclerView.setAdapter(adapter);

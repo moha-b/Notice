@@ -67,54 +67,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_bar"
         tools:layout_editor_absoluteX="3dp" />
-    <!-- Action Bar -->
-<!--    <LinearLayout-->
-<!--        android:id="@+id/action_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:background="@color/quick_actions_background"-->
-<!--        android:padding="@dimen/_15sdp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="@dimen/_23sdp"-->
-<!--            android:layout_height="@dimen/_23sdp"-->
-<!--            android:src="@drawable/ic_add_circle"-->
-<!--            app:tint="@color/icon"-->
-<!--            android:contentDescription="@string/add" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="@dimen/_23sdp"-->
-<!--            android:layout_height="@dimen/_23sdp"-->
-<!--            android:src="@drawable/ic_image"-->
-<!--            android:layout_marginStart="@dimen/_16sdp"-->
-<!--            app:tint="@color/icon"-->
-<!--            android:contentDescription="@string/add" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="@dimen/_23sdp"-->
-<!--            android:layout_height="@dimen/_23sdp"-->
-<!--            android:src="@drawable/ic_link"-->
-<!--            android:layout_marginStart="@dimen/_16sdp"-->
-<!--            app:tint="@color/icon"-->
-<!--            android:contentDescription="@string/add" />-->
-<!--    </LinearLayout>-->
     <!-- Float Action Button -->
     <ImageView
         android:id="@+id/add_note"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/fab_background"
-        android:padding="@dimen/_10sdp"
         android:layout_margin="@dimen/_16sdp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/fab_background"
+        android:contentDescription="@string/fab"
+        android:padding="@dimen/_10sdp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/fab" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

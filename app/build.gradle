@@ -46,6 +46,4 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.3.0"
     // Scalable size unit(Support different screen sizes)
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
-    //Rounded Image
-    implementation 'com.makeramen:roundedimageview:2.3.0'
 }

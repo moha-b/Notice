@@ -1,14 +1,9 @@
 package com.example.notice.adapter;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notice.R;
 import com.example.notice.entities.Note;
-import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
