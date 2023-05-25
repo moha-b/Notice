@@ -548,7 +548,14 @@ here is the implementation
         launcher.launch(intent);
     }
 ```
-
 ## Create Activity Section
 
+see the code nothing new the code is commented
+
 ## Adapter Section
+
+basic steps for the `Adapter`
+[arabic tutorial](https://youtu.be/eLVd0kuLeoI) (from 2:40)
+[english tutorial](https://youtu.be/18VcnYN5_LM) (from 4:00)
+
+see the code it's commented
