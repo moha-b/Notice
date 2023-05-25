@@ -89,14 +89,14 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"  // that's means take all the height available
+        android:layout_height="0dp"     // that's means take all the height available
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:clipToPadding="false"
         android:paddingHorizontal="0dp"
         android:paddingVertical="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        tools:layout_editor_absoluteX="3dp" /> // no need for it
+        tools:layout_editor_absoluteX="3dp" />    // no need for it
 ```
 
 4 - ImageView : regular `ImageView` with circle background and have a `plus` icon inside
@@ -116,6 +116,78 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 ```
+---
+
+### Activity Create Note
+```
+the path : app/src/main/res/layout/activity_create_note.xml
+```
+![1_2_3_4and5-preview](https://github.com/moha-b/Notice/assets/73842931/066f86ce-118b-4014-a104-073fbf4e0d93)
+
+1 - nothing new
+
+2 - we will find this view consist of circle and done icon
+```xml
+<ImageView
+     android:id="@+id/done_button"
+     android:layout_width="@dimen/_20sdp"
+     android:layout_height="@dimen/_20sdp"
+     android:layout_marginTop="@dimen/_16sdp"
+     android:layout_marginEnd="@dimen/_16sdp"
+     android:background="@drawable/done_background" // the circle 
+     android:contentDescription="@string/done"
+     android:padding="@dimen/_5sdp"
+     android:src="@drawable/ic_done" // the done icon
+     app:layout_constraintBottom_toBottomOf="@+id/back_button"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintTop_toTopOf="@+id/back_button"
+     app:layout_constraintVertical_bias="0.86"
+     app:tint="@color/icon" /> // the color
+```
+
+3, 4 - nothing new
+
+5 - u will find this in the activity_create_note.xml
+```xml
+ <include layout="@layout/bottom_sheet_layout" />
+```
+we use `<include/>` tag to put a whole view in another view. so if u wanna see this bottom sheet layout go to app/src/main/res/layout/bottom_sheet_layout.xml
+
+so if u notice in the ** activity_create_note.xml** file we use `CoordinatorLayout` within `ConstraintLayout` within our view (1,2,3,4) exept 5 it's in the `CoordinatorLayout` take a look :
+but why we use it why we didn't use `ConstraintLayout` just one time ?
+for makeing the xml file look readable
+```xml
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary" // give it color
+    tools:context=".activities.CreateNote">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"> // no need for it
+           <!-- Back Button -->
+           1
+           <!-- Done Button -->
+           2 
+           <!-- Note Title -->
+           3
+           <!-- Time & Date -->
+           3
+           <!-- Note Content -->
+           4
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Sheet -->
+    <include layout="@layout/bottom_sheet_layout" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+```
+
 
 ## Database Section
 
