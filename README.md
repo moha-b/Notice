@@ -255,6 +255,103 @@ here we have just 2 views and these 2 inside a vertical LinearLayout
 
 ## Database Section
 
+We use [Room Database](https://developer.android.com/training/data-storage/room) to create our database we have for main steps.
+
+1 - Import Room dependencies
+
+go to -> app/build.gradle in the dependencies section add 
+```gradle    
+   def room_version = "2.5.1"
+   
+   // Room Database
+   implementation "androidx.room:room-runtime:$room_version"
+   annotationProcessor "androidx.room:room-compiler:$room_version"
+```
+2 - Create the model class 
+
+model class it's a regular class like this 
+```java
+public class Note {
+   private int id;
+   private String title;
+}
+```
+we annotate this class as an Entity we give it a name "notes". and also annotate the variables within this class 
+```java
+@Entity(tableName = "notes")
+public class Note implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "title")
+    private String title;
+}
+```
+and here is the whole class (didn't include the setters & getters)
+```java
+@Entity(tableName = "notes")
+public class Note implements Serializable {
+
+    // Primary key field with auto-generation
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    // Column field for the note title
+    @ColumnInfo(name = "title")
+    private String title;
+
+    // Column field for the note content
+    @ColumnInfo(name = "content")
+    private String content;
+
+    // Column field for the note date
+    @ColumnInfo(name = "date")
+    private String date;
+
+    // Column field for the note color
+    @ColumnInfo(name = "color")
+    private String color;
+}
+```
+3 - Create Dao
+
+`Dao` : is the Data Access Object with Dao we can access our database. it's and `INTERFACE` class anotated with `@Dao` anotation 
+why it's `INTERFACE` ? : this is the best explination i found [stackoverflow](https://stackoverflow.com/a/23562084/19270622) or u can ask chatgpt
+```java
+@Dao
+public interface NoteDao {}
+```
+now we create our method
+```java
+@Dao
+public interface NoteDao {
+
+    // Insert a Note object into the database
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Note note);
+
+    // Update a Note object in the database
+    @Update
+    void update(Note note);
+
+    // Delete a Note object from the database
+    @Delete
+    void delete(Note note);
+
+    // Retrieve all Note objects from the "notes" table
+    @Query("SELECT * FROM notes")
+    List<Note> getAllNotes();
+
+    // Retrieve a Note object from the "notes" table based on its ID
+    @Query("SELECT * FROM notes WHERE id = :noteId")
+    Note getNoteById(int noteId);
+}
+```
+`@Insert(onConflict = OnConflictStrategy.REPLACE)` : This annotation is used to define an insert operation, it should be replaced with the new one.
+
+4 - Create the Database
+
 ## Main Activity Section
 
 ## Create Activity Section
