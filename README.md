@@ -207,6 +207,7 @@ consist of 3 views one for the title and the content and the time
 Path : app/src/main/res/layout/bottom_sheet_layout.xml
 ```
 ![Untitled-preview](https://github.com/moha-b/Notice/assets/73842931/4a16e14d-6269-4ee7-a860-09bd816eb149)
+
 here we have just 2 views and these 2 inside a vertical LinearLayout
 
 1 - regular view
