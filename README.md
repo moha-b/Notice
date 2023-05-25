@@ -5,6 +5,17 @@ Using Room Database, the app provides a scalable data storage solution that can 
 
 Overall, a simple note-taking app using Java and Room Database is an ideal tool for anyone who wants to stay organized and productive, whether you're a student, professional, or anyone in between.
 
+- [Notice](#notice)
+  * [Ui Section](#ui-section)
+    + [Activity Main](#activity-main)
+    + [Activity Create Note](#activity-create-note)
+    + [Note layout](#note-layout)
+    + [Bottom Sheet](#bottom-sheet)
+  * [Database Section](#database-section)
+  * [Main Activity Section](#main-activity-section)
+  * [Create Activity Section](#create-activity-section)
+  * [Adapter Section](#adapter-section)
+
 ## Ui Section
 First of all we use the `constraint layout` alot
 <img align="right" src="https://github.com/moha-b/Notice/assets/73842931/cf247085-c406-4c27-bcd5-9c4a279f2d40"/>
@@ -78,11 +89,11 @@ in this image the upper part of our `activity_main.xml` we have two views here 1
             android:autofillHints="no" />
     </LinearLayout>
 ```
-### How we can do this ?
+How we can do this ?
 ```xml
    android:background="@drawable/background_search" // here we give the LinearLayout a background how?
 ```
-### [Click Here](https://www.youtube.com/watch?v=MeCjfgR86MU)
+[Click Here](https://www.youtube.com/watch?v=MeCjfgR86MU)
 
 ---
 
@@ -383,6 +394,179 @@ public abstract class NoteDatabase extends RoomDatabase {
 
 ## Main Activity Section
 
+```java
+ private ActivityResultLauncher<Intent> launcher;
+```
+By using this launcher object, we can tell our app to start a new activity by passing it an Intent object. An Intent is like a message that tells the app what to do. The launcher object takes care of starting the activity and waits for the result to come back.
+```java
+   // initialize recycler view with the required properties
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Handle the result in the callback function
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Result is OK, handle success
+                        getNotes();
+                    } else {
+                        // Result is not OK, handle failure or cancellation
+                        // here we print the error message
+                        Log.e(TAG, "Error: " + result.getResultCode());
+                    }
+                });
+```
+
+to declare any thing in our ui we need to create object from the same data type like if u have an input field it's called `EditText` if u have text in ui then u need a `TextView`, same with the image u need `ImageView`, same with anything else.
+
+after we declare our objects we need to till this object his `id` each view u gonna use must have an `id` like this
+```xml
+  <!-- Float Action Button -->
+    <ImageView
+        android:id="@+id/add_note" // <-- this is the ID
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_16sdp"
+```
+```java
+// declare object
+ ImageView addNote;
+ EditText search;
+   protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+         // give it an id
+         addNote = findViewById(R.id.add_note);
+         search = findViewById(R.id.search); 
+   }
+```
+
+for the Recycler view
+```java
+        // TODO 1: initialize the RecyclerView
+        notesRecyclerView = findViewById(R.id.recycler_view);
+        // TODO 2: give the RecyclerView a shape
+        notesRecyclerView.setLayoutManager(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        );
+        // TODO 3: initialize the list for adapter
+        noteList = new ArrayList<>();
+        // TODO 4: initialize the Adapter
+        adapter = new NoteAdapter(noteList, this);
+        // TODO 5: a sign Adapter for the recycler view
+        notesRecyclerView.setAdapter(adapter);
+```
+for the Search this 3 methods it's all generated once u type `new TextWatcher` it will ask for this 3 methods 
+```java
+search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Check if the list is empty of not
+                if (noteList.size() != 0) {
+                     // this function implemented in the adapter class
+                    adapter.search(editable.toString());
+                }
+            }
+        });
+```
+for the part we call the data from the database in `getNote` method
+
+1 - Inside the method, a new class GetNotesTask is defined. This class extends the AsyncTask class, which allows us to perform background tasks (like accessing the database) without blocking the main user interface thread.
+
+2 - The GetNotesTask class overrides two methods: doInBackground() and onPostExecute(). These methods are executed at different stages of the background task.
+
+3 - doInBackground() is the method where the actual database operation takes place. It runs in the background thread, separate from the main user interface thread, to avoid freezing or slowing down the app.
+
+4 - Inside the doInBackground() method, the code retrieves all the saved notes from the database. It uses the NoteDatabase class to access the database instance and the associated data access object (DAO). The getAllNotes() method of the DAO returns a List of Note objects.
+
+5 - Once the database operation is complete, the onPostExecute() method is called automatically. This method runs on the main user interface thread, allowing us to update the user interface based on the results of the database operation.
+
+6 - In the onPostExecute() method, the retrieved notes are passed as a parameter (notes). Here, the code performs several operations to update the UI with the new 
+
+7 - Finally, a new instance of the GetNotesTask class is created, and its execute() method is called. This starts the background task, triggering the execution of doInBackground()
+```java
+private void getNotes() {
+    // Get all notes saved in database
+    
+    // Create a new instance of the GetNotesTask class
+    // This class extends AsyncTask to perform the database operation in the background
+    @SuppressLint("StaticFieldLeak")
+    class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
+        
+        @Override
+        protected List<Note> doInBackground(Void... voids) {
+            // Perform the database operation to get all notes
+            // Use the NoteDatabase instance to access the database and the DAO to retrieve the notes
+            return NoteDatabase.getInstance(getApplicationContext())
+                    .dao().getAllNotes();
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        protected void onPostExecute(List<Note> notes) {
+            super.onPostExecute(notes);
+            // This method is executed on the main user interface thread after the database operation is complete
+            
+            // Clear the noteList before adding the retrieved notes
+            noteList.clear();
+            
+            // Add the retrieved notes to the noteList
+            noteList.addAll(notes);
+            
+            // Notify the adapter that the data set has changed
+            // This will update the RecyclerView with the new notes
+            adapter.notifyDataSetChanged();
+            
+            // Scroll the RecyclerView to the top position
+            notesRecyclerView.smoothScrollToPosition(0);
+            notesRecyclerView.smoothScrollToPosition(0);
+        }
+    }
+    
+    // Create an instance of GetNotesTask and execute it
+    new GetNotesTask().execute();
+}
+```
+for the audio watch this [tutorial](https://youtu.be/C_Ka7cKwXW0)
+
+for the NoteListener u will notice that there is an implements beside the `MainActivity` class
+```java
+public class MainActivity extends AppCompatActivity implements NoteListener  // <-- this part here{}
+```
+this is our NoteListener it's an `INTERFACE` we can create methods and implemented somewhere else. in our case we implement the `onNoteClicked` method in the `MainActivity.class`. but why we make all this ??
+
+because we need to open the note the user gonna click on it, after implement the method in the `MainActivity.class` pass it to the adapter to preform the click action
+
+```java
+public interface NoteListener {
+    void onNoteClicked(Note note, int position);
+}
+```
+here is the implementation
+```java
+    @Override
+    public void onNoteClicked(Note note, int position) {
+        Intent intent = new Intent(getApplicationContext(), CreateNote.class);
+        intent.putExtra("isView", true);
+        intent.putExtra("note", note);
+        launcher.launch(intent);
+    }
+```
 ## Create Activity Section
 
+see the code nothing new the code is commented
+
 ## Adapter Section
+
+basic steps for the `Adapter`
+[arabic tutorial](https://youtu.be/eLVd0kuLeoI) (from 2:40)
+[english tutorial](https://youtu.be/18VcnYN5_LM) (from 4:00)
+
+see the code it's commented
