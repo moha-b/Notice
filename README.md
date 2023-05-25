@@ -16,9 +16,6 @@ Overall, a simple note-taking app using Java and Room Database is an ideal tool 
   * [Create Activity Section](#create-activity-section)
   * [Adapter Section](#adapter-section)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
-
 ## Ui Section
 First of all we use the `constraint layout` alot
 <img align="right" src="https://github.com/moha-b/Notice/assets/73842931/cf247085-c406-4c27-bcd5-9c4a279f2d40"/>
