@@ -37,7 +37,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/back_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/back_button"
-                app:layout_constraintVertical_bias="0.86"
+                app:layout_constraintVertical_bias="1.0"
                 app:tint="@color/icon" />
             <!-- Note Title -->
             <EditText
